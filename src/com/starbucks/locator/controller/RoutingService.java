@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.starbucks.locator.util.SblConstants;
+import com.starbucks.locator.util.StarbucksLocatorConstants;
 
 public class RoutingService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,11 +26,11 @@ public class RoutingService extends HttpServlet {
 			return;
 		}
 		
-		if (cmd.equals(SblConstants.REQ_PARAM_VALUE_LOCATE)) {
+		if (cmd.equals(StarbucksLocatorConstants.REQ_PARAM_VALUE_LOCATE)) {
 			
 		}
 		
-		if (req.getParameter("load") == null) {
+/*		if (req.getParameter("load") == null) {
 			try {
 				c = (DispatchingCommand) Class.forName(
 						"commands.dispatching." + cmd).newInstance();
@@ -56,8 +56,9 @@ public class RoutingService extends HttpServlet {
 				nextServlet = "/Loader";
 			}
 		}
-
 		getServletContext().getRequestDispatcher(nextServlet).forward(req, res);
+*/
+		getServletContext().getRequestDispatcher("/ViewManager").forward(req, res);
 	}
 
 }

@@ -1,3 +1,7 @@
 # Where's My Coffee?
 
 A Starbucks store locator web application.
+
+## Bootstrap
+
+- load table

@@ -70,21 +70,19 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
  */
 
 /* round corners */
+.round-14 {
+	-webkit-border-radius: 14px;
+	-moz-border-radius: 14px;
+	border-radius: 14px;
+}
 .round-17 {
 	-webkit-border-radius: 17px;
-	-khtml-border-radius: 17px;
 	-moz-border-radius: 17px;
 	border-radius: 17px;
 }
-/* opacity */
-/*.op-90 {
-	-moz-opacity: 0.9;
-	-khtml-opacity: 0.9;
-	opacity: 0.9;
-}*/
 /* shading */
 .text-shadow-1 {
-	text-shadow: 1px 1px 0 #fff;
+	text-shadow: 1px 1px 2px #fff;
 }
 /* visibility */
 .hidden {
@@ -117,26 +115,37 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
 .clear {
 	height: 1.5em;
 }
+/* layout */
 .pad-b {
 	padding-bottom: 1.5em;
 }
-
+.frame {
+	padding: 4px;
+	border: 1px solid #aaa;
+}
 
 /*
  * 3. Baseline (Default) Styles
  */
 
+body,
+h1, h2, h3, h4, h5, h6,
+input {
+	font-family: Futura,'Century Gothic',AppleGothic,sans-serif;
+}
+
 body {
-	font: 18px/1.7em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	line-height: 1.7em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: Georgia, Helvetica, Times, serif;
 	line-height: 1.2;
-	font-weight: bold;
+	font-weight: normal;
 }
 h1 {
 	font-size: 1.6em;
+	letter-spacing: -1px;
 }
 h2 {
 	font-size: 1.4em;
@@ -167,12 +176,16 @@ a:hover, a:active, a:focus {
 }
 #title {
 	padding-top: 12px;
-	font-size: 72px;
+	font-size: 70px;
 	color: #1ca36b;
+}
+#title:hover {
+	color: transparent;
+	text-shadow: 0 0 11px #1ca36b;
 }
 #tagline {
 	padding-top: 6px;
-	font-size: 18px;
+	font-size: 21px;
 	color: #777;
 }
 
@@ -220,9 +233,18 @@ body:before {
 a#logo {
 	border-bottom: 0 none;
 }
+#map-container {
+	width: 612px;
+	height: 306px;
+}
 #map-canvas {
-	width: 620px;
-	height: 310px;
+	width: 100%;
+	height: 100%;
+}
+#map-canvas a,
+#map-canvas div {
+	line-height: 1.5em;
+	font-family: Futura,'Century Gothic',AppleGothic,sans-serif !important;
 }
 
 
@@ -242,13 +264,15 @@ a#logo {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	
 	width: 884px;
 	height: 30px;
-	padding: 3px 40px 3px 14px;
-	font-size: 20px;
-	line-height: 1.5em;
-	border: 1px solid #aaa;
 	outline: 0 none;
+	border: 1px solid #aaa;
+	padding: 3px 41px 3px 13px;
+	
+	font-size: 21px;
+	line-height: 1.523em;
 }
 .addr-input:focus {
 	border-color: #007042;
@@ -267,3 +291,12 @@ a#logo {
 	background-position: 0 -30px;
 }
 
+/* google maps autocomplete dropdown */
+.pac-container {
+	-webkit-border-top-right-radius: 17px;
+	-moz-border-radius-topright: 17px;
+	border-top-right-radius: 17px;
+	-moz-opacity: 0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+}

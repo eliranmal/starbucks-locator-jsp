@@ -1,6 +1,6 @@
 package com.starbucks.locator.util;
 
-public class SblConstants {
+public class StarbucksLocatorConstants {
 
 	public static final String REQ_PARAM_NAME_COMMAND = "command";
 	public static final String REQ_PARAM_NAME_ADDRESS = "address";

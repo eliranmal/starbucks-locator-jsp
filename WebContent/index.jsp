@@ -46,13 +46,13 @@
 			<div class="grid_12">
 				<form class="addr-form" action="Controller" method="post">
 					<%
-						String nameCommand = SblConstants.REQ_PARAM_NAME_COMMAND;
-						String nameAddress = SblConstants.REQ_PARAM_NAME_ADDRESS;
-						String valueLocate = SblConstants.REQ_PARAM_VALUE_LOCATE;
+						String nameCommand = StarbucksLocatorConstants.REQ_PARAM_NAME_COMMAND;
+						String nameAddress = StarbucksLocatorConstants.REQ_PARAM_NAME_ADDRESS;
+						String valueLocate = StarbucksLocatorConstants.REQ_PARAM_VALUE_LOCATE;
 					%>
 					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" />
 					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Type in your address" />
-					<input class="addr-submit round-17" type="submit" value="" />
+					<input class="addr-submit round-14" type="submit" value="" />
 				</form>
 			</div>
 			<div class="clear pad-b"></div>
@@ -64,7 +64,9 @@
 				</ul>
 			</aside>
 			<div id="content" class="grid_8">
-				<div id="map-canvas"></div>
+				<div id="map-container" class="frame">
+					<div id="map-canvas"></div>
+				</div>
 			</div>
 			<div class="clear"></div>
 			<footer id="footer" class="grid_12 right-text">
