@@ -15,6 +15,7 @@
  * 	Used colors:
  * 		green: 			#007042
  * 		light green: 	#1ca36b
+ * 		lighter green: 	#e6f6e6
  * 		gray shades: 	#777
  * 						#aaa
  * 						#e2e2e2
@@ -123,6 +124,7 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
 	padding: 4px;
 	border: 1px solid #aaa;
 }
+
 
 /*
  * 3. Baseline (Default) Styles
@@ -292,11 +294,31 @@ a#logo {
 }
 
 /* google maps autocomplete dropdown */
+.pac-container,
+.pac-item {
+	-webkit-border-radius: 17px;
+	-moz-border-radius: 17px;
+	border-radius: 17px;
+}
 .pac-container {
-	-webkit-border-top-right-radius: 17px;
-	-moz-border-radius-topright: 17px;
-	border-top-right-radius: 17px;
 	-moz-opacity: 0.8;
 	-khtml-opacity: 0.8;
 	opacity: 0.8;
+	box-shadow: 2px 4px 16px #aaa;
+}
+.pac-item {
+	padding: 0 .6em;
+}
+.pac-selected {
+	background-color: #e6f6e6;
+}
+/* hide the google bottom logo, just for the kicks */
+.pac-container:after {
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0 !important;
+	border: 0 !important;
+	height: 1px !important;
+	width: 1px !important;
+	overflow: hidden;
 }

@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 
 <%@ page import="com.starbucks.locator.util.*" %>
-
-
-<!-- org.apache.derby.jdbc.EmbeddedDriver jdbc:derby://server[:port]/databaseName[;URLAttributes=value[;...]] -->
 
 
 <!DOCTYPE html>
@@ -17,11 +14,11 @@
 		
 		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 
-		<link href="styles/960_12_col.css" type="text/css" rel="stylesheet" media="screen" />
-		<link href="styles/styles.css" type="text/css" rel="stylesheet" media="screen" />
+		<link href="css/960_12_col.css" type="text/css" rel="stylesheet" media="screen" />
+		<link href="css/styles.css" type="text/css" rel="stylesheet" media="screen" />
 
-		<script src="functionality/util.js"></script>
-		<script src="functionality/loader.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/loader.js"></script>
 
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
 	</head>

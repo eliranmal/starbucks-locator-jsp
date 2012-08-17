@@ -3,7 +3,6 @@ package com.starbucks.locator.model.dataaccess;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import com.starbucks.locator.model.runtime.StarbucksLocatorException;
 
@@ -16,13 +15,17 @@ public class DBConnection {
 			return con;
 		}
 		try {
+			String starbucksLocatorHome = System.getenv("STARBUCKS_LOCATOR_HOME");
+			
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-//			con = DriverManager.getConnection("jdbc:derby:memory:StarbucksLocatorDB;create=true");
-			con = DriverManager.getConnection("jdbc:derby:StarbucksLocatorDB");
+			//			con = DriverManager.getConnection("jdbc:derby:memory:StarbucksLocatorDB;create=true");
+			con = DriverManager.getConnection("jdbc:derby:" + starbucksLocatorHome + "/db/StarbucksLocatorDB");
 		} catch (ClassNotFoundException e) {
-			throw new StarbucksLocatorException("Driver init failed:\n" + Arrays.toString(e.getStackTrace()));
+			e.printStackTrace();
+			throw new StarbucksLocatorException("Driver init failed.");
 		} catch (SQLException e) {
-			throw new StarbucksLocatorException("SQL exception thrown:\n" + Arrays.toString(e.getStackTrace()));
+			e.printStackTrace();
+			throw new StarbucksLocatorException("SQL exception thrown.");
 		}
 		return con;
 	}

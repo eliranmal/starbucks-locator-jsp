@@ -4,52 +4,46 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import managers.BankBalanceManager;
-import systemCore.BankException;
-import valueObjects.BalanceAction;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.starbucks.locator.model.dto.Location;
+import com.starbucks.locator.model.runtime.StarbucksLocatorException;
+import com.starbucks.locator.util.DBConstants;
 
 public class LocationsDBManager implements LocationsManager {
 
-	private String getBalancePS;
-	private String addBalancePS;
+	private static final String getBalancePS = "SELECT * FROM " + DBConstants.TABLE_NAME + " WHERE balance_id = ?";
+	private static final String addBalancePS = "INSERT INTO bank_balance (action, amount, [date], cust_id) VALUES (?,?,?,?)";
+	private static final String GET_LOCATIONS_BY_RANGE_PS = "SELECT * FROM deposits WHERE cust_id = ?"; // TODO
 
 	public LocationsDBManager() {
-		getBalancePS = "SELECT * FROM bank_balance WHERE balance_id = ?";
-		addBalancePS = "INSERT INTO bank_balance (action, amount, [date], cust_id) VALUES"
-			+ " (?,?,?,?)";
 	}
 
-	public Locations getBankBalance(int balanceId, Connection con) throws StarbucksLocatorException {
+	@Override
+	public List<Location> getLocations(int balanceId, Connection con) throws StarbucksLocatorException {
 		PreparedStatement ps;
 		ResultSet rs;
-		Locations b = null;
+		Location l = null;
+		List<Location> locations = new ArrayList<Location>();
 		try {
 			ps = con.prepareStatement(getBalancePS);
 			ps.setInt(1, balanceId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				b = new Locations(rs.getInt("balance_id"), rs.getString("action"), rs
-					.getDouble("amount"), rs.getDate("date"), rs.getInt("cust_id"));
+				l = new Location(); // TODO
+				locations.add(l);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new StarbucksLocatorException("SQL exception thrown");
 		}
-		if (b == null) {
-			throw new StarbucksLocatorException("Balance record with ID '" + balanceId + "' not found.");
-		} else {
-			return b;
-		}
+		return locations;
 	}
 
-	public void addBankBalance(Locations b, Connection con) {
-		PreparedStatement ps;
-		try {
-			ps = con.prepareStatement(addBalancePS);
-			ps.setString(1, b.getAction());
-			ps.setDouble(2, b.getAmount());
-			ps.setDate(3, b.getDate());
-			ps.setInt(4, b.getCustId());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-		}
+	@Override
+	public void addLocations(List<Location> b, Connection con) throws StarbucksLocatorException {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,17 +2,37 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
 	<display-name>starbucks-locator</display-name>
 	
+	<context-param>
+		<param-name>REQ_PARAM_NAME_COMMAND</param-name>
+		<param-value>command</param-value>
+	</context-param>
+
+	
 	<servlet>
-		<servlet-name>RoutingService</servlet-name>
-		<servlet-class>com.starbucks.locator.controller.RoutingService</servlet-class>
+		<servlet-name>LoaderService</servlet-name>
+		<servlet-class>com.starbucks.locator.controller.LoaderService</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>GenericAsyncService</servlet-name>
+		<servlet-class>com.starbucks.locator.controller.GenericAsyncService</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewManager</servlet-name>
+		<servlet-class>com.starbucks.locator.view.ViewManager</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>LocatorService</servlet-name>
 		<servlet-class>com.starbucks.locator.controller.LocatorService</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>RoutingService</servlet-name>
-		<url-pattern>/Controller</url-pattern>
+		<servlet-name>GenericAsyncService</servlet-name>
+		<url-pattern>/AsyncService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewManager</servlet-name>
+		<url-pattern>/ViewManager</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LocatorService</servlet-name>
@@ -20,7 +40,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 </web-app>

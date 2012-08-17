@@ -1,36 +1,34 @@
 package com.starbucks.locator.view;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.starbucks.locator.util.StarbucksLocatorConstants;
+import com.starbucks.locator.model.dto.Transferable;
+import com.starbucks.locator.util.AppConstants;
 
 @SuppressWarnings("serial")
-public class ViewManager extends HttpServlet implements Servlet {
+public class ViewManager extends HttpServlet {
 
-	public void init() throws ServletException {
-	}
+	@Override
+	public void service(ServletRequest req, ServletResponse res) throws ServletException,
+			IOException {
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) {
+		String cmd = req.getParameter(AppConstants.REQ_PARAM_NAME_COMMAND);
 
-		String cmd = request.getParameter(StarbucksLocatorConstants.REQ_PARAM_NAME_COMMAND);
+		Object ajaxRes = req.getAttribute("ajaxResponse");
+		Transferable resText = (Transferable) ajaxRes;
+
+		// TODO format resText if necessary
 		
-/*		if (cmd.equals("contactPage")) {
-		}
-*/
-
-		try {
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		PrintWriter out;
+		out = res.getWriter();
+		out.write(resText.asString());
+		out.flush();
 
 	}
 
