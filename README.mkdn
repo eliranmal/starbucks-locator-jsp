@@ -4,4 +4,5 @@ A Starbucks store locator web application.
 
 ## Bootstrap
 
-- load table
+- Set system environment variables:
+    - `STARBUCKS_LOCATOR_HOME=[project path]`
