@@ -12,15 +12,15 @@ import com.starbucks.locator.model.dto.Location;
 import com.starbucks.locator.model.runtime.StarbucksLocatorException;
 import com.starbucks.locator.util.DBConstants;
 
-public class LocationsDBManager implements LocationsManager {
+public class LocationsManagerImpl implements LocationsManager {
 
-	private static final LocationsDBManager ldbm = new LocationsDBManager();
+	private static final LocationsManagerImpl ldbm = new LocationsManagerImpl();
 	
 	private static String PS_GET_LOCATION;
 	private static String PS_ADD_LOCATION;
 	private static String PS_GET_LOCATIONS_BY_RANGE;
 
-	private LocationsDBManager() {
+	private LocationsManagerImpl() {
 		PS_GET_LOCATION = "SELECT * FROM " + DBConstants.TABLE_NAME + " WHERE balance_id = ?";
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO ");
@@ -38,7 +38,7 @@ public class LocationsDBManager implements LocationsManager {
 		PS_GET_LOCATIONS_BY_RANGE = "SELECT * FROM deposits WHERE cust_id = ?"; // TODO change to match locations table
 	}
 
-	public static LocationsDBManager getInstance() {
+	public static LocationsManagerImpl getInstance() {
 		return ldbm;
 	}
 	

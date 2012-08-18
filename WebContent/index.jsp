@@ -48,16 +48,17 @@
 						String valueLocate = AppConstants.REQ_PARAM_VALUE_LOCATE;
 					%>
 					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" />
-					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Type in your address" />
+					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Where you're at? Fill your address please." />
 					<input class="addr-submit round-14" type="submit" value="" />
 				</form>
 			</div>
 			<div class="clear pad-b"></div>
 			<aside id="sidebar" class="grid_4">
 				<ul>
-					<li>Location 1</li>
-					<li>Location 2</li>
-					<li>Location 3</li>
+					<li>
+						City: city.<br />
+						Address: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
+					</li>
 				</ul>
 			</aside>
 			<div id="content" class="grid_8">

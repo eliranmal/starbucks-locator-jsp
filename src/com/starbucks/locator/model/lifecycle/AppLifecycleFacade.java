@@ -1,5 +1,7 @@
 package com.starbucks.locator.model.lifecycle;
 
+import com.starbucks.locator.util.AppConstants;
+
 
 public class AppLifecycleFacade {
 
@@ -8,21 +10,22 @@ public class AppLifecycleFacade {
 	 */
 	private static final AppLifecycleFacade _sli = new AppLifecycleFacade();
 	
-	private DBLifecycleManager _dblf;
+	private DBLifecycleProxy _dblf;
 
 	/*
 	 * prevent initialization
 	 */
 	private AppLifecycleFacade() {
 		assertSysEvnVarsSet();
-		_dblf = new DBLifecycleManagerImpl();
+		_dblf = new DBLifecycleProxyImpl();
 	}
 	
 	private void assertSysEvnVarsSet() {
 
-		String starbucksLocatorHome = System.getenv("STARBUCKS_LOCATOR_HOME");
+		String starbucksLocatorHome = System.getenv(AppConstants.SYS_ENV_VAR_APP_HOME);
 		assert starbucksLocatorHome != null && !starbucksLocatorHome.trim().isEmpty();
-		System.out.println("> STARBUCKS_LOCATOR_HOME=[" + starbucksLocatorHome + "]");
+
+		System.out.println("> " + AppConstants.SYS_ENV_VAR_APP_HOME + "=[" + starbucksLocatorHome + "]");
 	}
 
 	/**
