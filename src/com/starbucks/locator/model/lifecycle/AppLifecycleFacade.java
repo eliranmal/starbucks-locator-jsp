@@ -1,19 +1,19 @@
 package com.starbucks.locator.model.lifecycle;
 
 
-public class AppLifecycleHandler {
+public class AppLifecycleFacade {
 
 	/*
 	 * singleton instance
 	 */
-	private static final AppLifecycleHandler _sli = new AppLifecycleHandler();
+	private static final AppLifecycleFacade _sli = new AppLifecycleFacade();
 	
 	private DBLifecycleFacade _dblf;
 
 	/*
 	 * prevent initialization
 	 */
-	private AppLifecycleHandler() {
+	private AppLifecycleFacade() {
 		assertSysEvnVarsSet();
 		_dblf = new DBLifecycleFacadeImpl();
 	}
@@ -29,7 +29,7 @@ public class AppLifecycleHandler {
 	 * provide single point access
 	 * @return
 	 */
-	public static AppLifecycleHandler getInstance() {
+	public static AppLifecycleFacade getInstance() {
 		return _sli;
 	}
 	
