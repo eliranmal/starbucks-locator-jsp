@@ -9,8 +9,8 @@
 
 	
 	<servlet>
-		<servlet-name>LoaderService</servlet-name>
-		<servlet-class>com.starbucks.locator.controller.LoaderService</servlet-class>
+		<servlet-name>AppLifecycleHandlerService</servlet-name>
+		<servlet-class>com.starbucks.locator.controller.AppLifecycleHandlerService</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
