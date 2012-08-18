@@ -1,4 +1,4 @@
-package com.starbucks.locator.model.bootstrap;
+package com.starbucks.locator.model.lifecycle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,10 +20,8 @@ import com.starbucks.locator.util.CSVParser;
 import com.starbucks.locator.util.DBConstants;
 import com.starbucks.locator.util.Helper;
 
-public class DBLoader {
+public class DBLifecycleFacadeImpl implements DBLifecycleFacade {
 
-	private static final DBLoader dbl = new DBLoader();
-	
 	private static final String USA_STARBUCKS_FILE_PATH = System.getenv("STARBUCKS_LOCATOR_HOME") + "/resources/initial-data/";
 	private static final String USA_STARBUCKS_FILE_NAME = "USA-Starbucks.csv";
 	private static final String STMT_DROP_TABLE = "DROP TABLE " + DBConstants.TABLE_NAME;
@@ -31,10 +29,8 @@ public class DBLoader {
 
 	private static Connection _conn;
 	
-	/**
-	 * prevent initialization
-	 */
-	private DBLoader() {
+
+	public DBLifecycleFacadeImpl() {
 		initVariables();
 		try {
 			_conn = DBConnection.connect();
@@ -43,12 +39,6 @@ public class DBLoader {
 		}
 	}
 
-	/**
-	 * provide single point access
-	 */
-	public static DBLoader getInstance() {
-		return dbl;
-	}
 	
 	private void initVariables() {
 		StringBuilder sb = new StringBuilder();
@@ -71,7 +61,8 @@ public class DBLoader {
 		STMT_CREATE_TABLE = sb.toString();
 	}
 
-	public static void bootstrapDatabase() {
+	@Override
+	public void bootstrapDatabase() {
 		boolean tableCreated = false;
 		try {
 			tableCreated = createLocationsTable(_conn);
@@ -180,7 +171,7 @@ public class DBLoader {
 		}
 	}
 
-	public static void clearDatabase() {
+	public void teardownDatabase() {
 		try {
 			boolean tableRemoved = removeLocationsTable(_conn);
 			if (tableRemoved) {
