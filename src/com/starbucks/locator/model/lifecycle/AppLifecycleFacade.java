@@ -8,14 +8,14 @@ public class AppLifecycleFacade {
 	 */
 	private static final AppLifecycleFacade _sli = new AppLifecycleFacade();
 	
-	private DBLifecycleFacade _dblf;
+	private DBLifecycleManager _dblf;
 
 	/*
 	 * prevent initialization
 	 */
 	private AppLifecycleFacade() {
 		assertSysEvnVarsSet();
-		_dblf = new DBLifecycleFacadeImpl();
+		_dblf = new DBLifecycleManagerImpl();
 	}
 	
 	private void assertSysEvnVarsSet() {

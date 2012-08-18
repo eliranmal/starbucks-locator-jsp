@@ -20,7 +20,7 @@ import com.starbucks.locator.util.CSVParser;
 import com.starbucks.locator.util.DBConstants;
 import com.starbucks.locator.util.Helper;
 
-public class DBLifecycleFacadeImpl implements DBLifecycleFacade {
+public class DBLifecycleManagerImpl implements DBLifecycleManager {
 
 	private static final String USA_STARBUCKS_FILE_PATH = System.getenv("STARBUCKS_LOCATOR_HOME") + "/resources/initial-data/";
 	private static final String USA_STARBUCKS_FILE_NAME = "USA-Starbucks.csv";
@@ -30,7 +30,7 @@ public class DBLifecycleFacadeImpl implements DBLifecycleFacade {
 	private static Connection _conn;
 	
 
-	public DBLifecycleFacadeImpl() {
+	public DBLifecycleManagerImpl() {
 		initVariables();
 		try {
 			_conn = DBConnection.connect();
