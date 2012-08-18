@@ -20,7 +20,9 @@ public class ViewManager extends HttpServlet {
 
 		String cmd = req.getParameter(AppConstants.REQ_PARAM_NAME_COMMAND);
 
-		Object ajaxRes = req.getAttribute("ajaxResponse");
+		
+		
+		Object ajaxRes = req.getAttribute(AppConstants.REQ_ATTR_NAME_AJAX_RES);
 		Transferable resText = (Transferable) ajaxRes;
 
 		// TODO format resText if necessary

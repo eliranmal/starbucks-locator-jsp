@@ -5,4 +5,6 @@
 		Starbucks.init.googleMap();
 	};
 
+	// TODO add enter key hander for the input button
+
 })(window, document);

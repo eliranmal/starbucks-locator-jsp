@@ -1,5 +1,7 @@
-package com.starbucks.locator.model.lifecycle;
+package com.starbucks.locator.model.facade;
 
+import com.starbucks.locator.model.lifecycle.DBLifecycleProxy;
+import com.starbucks.locator.model.lifecycle.DBLifecycleProxyImpl;
 import com.starbucks.locator.util.AppConstants;
 
 

@@ -9,7 +9,10 @@ import com.starbucks.locator.model.runtime.StarbucksLocatorException;
 
 public interface LocationsManager {
 	
-	public List<Location> getLocations(int balanceId, Connection con) throws StarbucksLocatorException;
+	Location getLocation(String address, Connection con) throws StarbucksLocatorException;
+
+	public List<Location> getLocations(Connection con) throws StarbucksLocatorException;
 
 	public boolean addLocations(Set<Location> b, Connection con) throws StarbucksLocatorException;
+
 }

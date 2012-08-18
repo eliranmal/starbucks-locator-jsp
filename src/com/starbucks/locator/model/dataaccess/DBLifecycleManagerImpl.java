@@ -46,7 +46,7 @@ public class DBLifecycleManagerImpl implements DBLifecycleManager {
 	}
 
 	/**
-	 * Creates the locations table.
+	 * Performs a create operation.
 	 * 
 	 * @return {@code true} if action was performed successfully, {@code false} otherwise.
 	 * @throws StarbucksLocatorException

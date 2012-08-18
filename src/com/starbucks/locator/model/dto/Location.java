@@ -6,36 +6,27 @@ public class Location implements Comparable<Location> {
 	private double _lat;
 	private String _city;
 	private String _address;
+
 	
 	/**
-	 * Represented by the address field.
+	 * default initialization
 	 */
-	private int _uid;
-
 	public Location() {
 		_lng = 0.0;
 		_lat = 0.0;
-
-		postConstruct();
+		_city = "";
+		_address = "";
 	}
+
 
 	public Location(double lng, double lat, String city, String address) {
 		_lng = lng;
 		_lat = lat;
 		_city = city;
 		_address = address;
-		
-		postConstruct();
 	}
+
 	
-	private void postConstruct() {
-		_uid = this.hashCode();
-	}
-
-	public int getUid() {
-		return _uid;
-	}
-
 	public double getLng() {
 		return _lng;
 	}

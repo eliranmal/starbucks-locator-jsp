@@ -3,7 +3,7 @@ package com.starbucks.locator.controller;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.starbucks.locator.model.lifecycle.AppLifecycleFacade;
+import com.starbucks.locator.model.facade.AppLifecycleFacade;
 
 @SuppressWarnings("serial")
 public class AppLifecycleHandlerService extends HttpServlet {

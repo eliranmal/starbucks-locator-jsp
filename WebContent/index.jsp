@@ -41,16 +41,19 @@
 			</header>
 			<div class="clear"></div>
 			<div class="grid_12">
-				<form class="addr-form" action="Controller" method="post">
+<!-- 				<form class="addr-form" action="AsyncService" method="post"> -->
+				<div class="addr-form">
 					<%
 						String nameCommand = AppConstants.REQ_PARAM_NAME_COMMAND;
 						String nameAddress = AppConstants.REQ_PARAM_NAME_ADDRESS;
 						String valueLocate = AppConstants.REQ_PARAM_VALUE_LOCATE;
 					%>
-					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" />
+<!-- 					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" /> -->
 					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Where you're at? Fill your address please." />
-					<input class="addr-submit round-14" type="submit" value="" />
-				</form>
+					<a class="addr-submit round-14" href="AsyncService?<%= nameCommand %>=<%= valueLocate %>"></a>
+				</div>
+<!-- 					<input class="addr-submit round-14" type="submit" value="" /> -->
+<!-- 				</form> -->
 			</div>
 			<div class="clear pad-b"></div>
 			<aside id="sidebar" class="grid_4">
