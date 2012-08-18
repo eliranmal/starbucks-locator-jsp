@@ -3,17 +3,17 @@ package com.starbucks.locator.controller;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.starbucks.locator.model.runtime.StarbucksLocatorBootstapper;
+import com.starbucks.locator.model.runtime.AppBootstapper;
 
 @SuppressWarnings("serial")
 public class LoaderService extends HttpServlet {
 
-	private StarbucksLocatorBootstapper slb;
+	private AppBootstapper slb;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		slb = StarbucksLocatorBootstapper.getInstance();
+		slb = AppBootstapper.getInstance();
 		slb.initDatabase();
 	}
 

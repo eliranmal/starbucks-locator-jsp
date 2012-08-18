@@ -2,14 +2,14 @@ package com.starbucks.locator.model.runtime;
 
 import com.starbucks.locator.model.bootstrap.DBLoader;
 
-public class StarbucksLocatorBootstapper {
+public class AppBootstapper {
 
-	private static final StarbucksLocatorBootstapper sli = new StarbucksLocatorBootstapper();
+	private static final AppBootstapper sli = new AppBootstapper();
 
 	/**
 	 * prevent initialization
 	 */
-	private StarbucksLocatorBootstapper() {
+	private AppBootstapper() {
 		assertSysEvnVarsSet();
 		DBLoader.getInstance();
 	}
@@ -25,7 +25,7 @@ public class StarbucksLocatorBootstapper {
 	 * provide single point access
 	 * @return
 	 */
-	public static StarbucksLocatorBootstapper getInstance() {
+	public static AppBootstapper getInstance() {
 		return sli;
 	}
 	

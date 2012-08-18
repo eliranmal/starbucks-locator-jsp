@@ -5,10 +5,16 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.table.TableModel;
 
 import com.starbucks.locator.model.dataaccess.DBConnection;
+import com.starbucks.locator.model.dataaccess.LocationsDBManager;
+import com.starbucks.locator.model.dto.Location;
 import com.starbucks.locator.model.runtime.StarbucksLocatorException;
 import com.starbucks.locator.util.CSVParser;
 import com.starbucks.locator.util.DBConstants;
@@ -20,18 +26,25 @@ public class DBLoader {
 	
 	private static final String USA_STARBUCKS_FILE_PATH = System.getenv("STARBUCKS_LOCATOR_HOME") + "/resources/initial-data/";
 	private static final String USA_STARBUCKS_FILE_NAME = "USA-Starbucks.csv";
+	private static final String STMT_DROP_TABLE = "DROP TABLE " + DBConstants.TABLE_NAME;
 	private static String STMT_CREATE_TABLE;
 
+	private static Connection _conn;
+	
 	/**
 	 * prevent initialization
 	 */
 	private DBLoader() {
 		initVariables();
+		try {
+			_conn = DBConnection.connect();
+		} catch (StarbucksLocatorException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	/**
 	 * provide single point access
-	 * @return
 	 */
 	public static DBLoader getInstance() {
 		return dbl;
@@ -39,6 +52,7 @@ public class DBLoader {
 	
 	private void initVariables() {
 		StringBuilder sb = new StringBuilder();
+		
 		sb.append("CREATE TABLE ");
 		sb.append(DBConstants.TABLE_NAME);
 		sb.append(" (");
@@ -51,60 +65,50 @@ public class DBLoader {
 		sb.append(DBConstants.COL_NAME_ADDRESS);
 		sb.append(" VARCHAR(400), ");
 		sb.append("PRIMARY KEY (");
-		sb.append(DBConstants.COL_NAME_LNG);
-		sb.append(",");
-		sb.append(DBConstants.COL_NAME_LAT);
+		sb.append(DBConstants.COL_NAME_ADDRESS);
 		sb.append("))");
 
 		STMT_CREATE_TABLE = sb.toString();
 	}
 
 	public static void bootstrapDatabase() {
-		Connection conn;
+		boolean tableCreated = false;
 		try {
-			conn = DBConnection.connect();
-
-			boolean tableCreated = false;
+			tableCreated = createLocationsTable(_conn);
+		} catch (StarbucksLocatorException e) {
+			e.printStackTrace();
+		}
+		
+		if (tableCreated) {
+			System.out.println("> table " + DBConstants.TABLE_NAME + " created.");
 			try {
-				tableCreated = createLocationsTable(conn);
+				boolean tablePopulated = populateLocationsTable(_conn);
+				if (tablePopulated) {
+					System.out.println("> table " + DBConstants.TABLE_NAME + " populated with initial data.");
+				}
 			} catch (StarbucksLocatorException e) {
 				e.printStackTrace();
 			}
-			
-			if (tableCreated) {
-				System.out.println("> table created...");
-				try {
-					boolean tablePopulated = populateLocationsTable(conn);
-					if (tablePopulated) {
-						System.out.println("> table populated with initial data...");
-					}
-				} catch (StarbucksLocatorException e) {
-					e.printStackTrace();
-				}
-			}
-
-		} catch (StarbucksLocatorException e1) {
-			e1.printStackTrace();
 		}
 	}
 
 	/**
 	 * Creates the locations table.
 	 * 
-	 * @return {@code true} if a new table was created, {@code false} otherwise.
+	 * @return {@code true} if action was performed successfully, {@code false} otherwise.
 	 * @throws StarbucksLocatorException
 	 */
 	private static boolean createLocationsTable(Connection conn) throws StarbucksLocatorException {
+		boolean tableExist = Helper.isTableExist(conn);
+		if (tableExist) {
+			return false;
+		}
 		try {
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(STMT_CREATE_TABLE);
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			boolean tableAlreadyExist = Helper.isTableExist(e);
-			if (tableAlreadyExist) {
-				return false;
-			}
 			e.printStackTrace();
 			throw new StarbucksLocatorException("SQL exception thrown, could not create table");
 		}
@@ -114,7 +118,7 @@ public class DBLoader {
 	 * Populates the locations table with initial data from a CSV file.
 	 * 
 	 * @param conn
-	 * @return {@code true} if the table was populated, {@code false} otherwise.
+	 * @return {@code true} if action was performed successfully, {@code false} otherwise.
 	 * @throws StarbucksLocatorException
 	 */
 	private static boolean populateLocationsTable(Connection conn) throws StarbucksLocatorException {
@@ -133,25 +137,92 @@ public class DBLoader {
 			return false;
 		}
 		
-/*		// Print all the columns of the table, followed by a new line.
-		for (int x = 0; x < t.getColumnCount(); x++) {
-			System.out.print(t.getColumnName(x) + " ");
-		}
-		System.out.println();
-
-		// Print all the data from the table.
-		for (int x = 0; x < t.getRowCount(); x++) {
-			for (int y = 0; y < t.getColumnCount(); y++) {
-				System.out.print(t.getValueAt(x, y) + " ");
+		List<Location> locationList = new ArrayList<Location>();
+		for (int x = 0; x < tableModel.getRowCount(); x++) {
+			Location l = new Location();
+			for (int y = 0; y < tableModel.getColumnCount(); y++) {
+				String columnName = tableModel.getColumnName(y);
+				Object valObj = tableModel.getValueAt(x, y);
+				populateLocationDTO(columnName, valObj, l);
 			}
-			System.out.println();
+//			System.out.println("location: " + l);
+			locationList.add(l);
 		}
-*/		
-		return true;
+		
+		
+		// filter duplicates (3 found)
+		Set<Location> locationSet = new HashSet<Location>(locationList);
+		int duplicatesCount = locationList.size() - locationSet.size();
+		boolean containedDuplicates = duplicatesCount != 0;
+		if (containedDuplicates) {
+			System.out.println("> > > > > " + duplicatesCount
+					+ " duplicate locations found, filtered by address as UID :)");
+		}
+		
+		return LocationsDBManager.getInstance().addLocations(locationSet, conn);
+	}
+
+	private static void populateLocationDTO(String columnName, Object valObj, Location l) {
+		
+		if (valObj == null) {
+			return;
+		}
+		
+		String val = String.valueOf(valObj);
+		if (columnName.equalsIgnoreCase(DBConstants.COL_NAME_LNG)) {
+			l.setLng(Double.valueOf(val));
+		} else if (columnName.equalsIgnoreCase(DBConstants.COL_NAME_LAT)) {
+			l.setLat(Double.valueOf(val));
+		} else if (columnName.equalsIgnoreCase(DBConstants.COL_NAME_CITY)) {
+			l.setCity(val);
+		} else if (columnName.equalsIgnoreCase(DBConstants.COL_NAME_ADDRESS)) {
+			l.setAddress(val);
+		}
 	}
 
 	public static void clearDatabase() {
-		// TODO Auto-generated method stub
+		try {
+			boolean tableRemoved = removeLocationsTable(_conn);
+			if (tableRemoved) {
+				System.out.println("> table " + DBConstants.TABLE_NAME + " removed.");
+			}
+		} catch (StarbucksLocatorException e) {
+			e.printStackTrace();
+		}
 		
+	}
+
+	/**
+	 * Invokes {@link #dropLocationsTable(Connection)} only if the table exists.
+	 * 
+	 * @param conn
+	 * @return {@code true} if action was performed successfully, {@code false} otherwise.
+	 * @throws StarbucksLocatorException
+	 */
+	public static boolean removeLocationsTable(Connection conn) throws StarbucksLocatorException {
+		boolean tableExist = Helper.isTableExist(conn);
+		if (!tableExist) {
+			return false;
+		}
+		dropLocationsTable(conn);
+		return true;
+	}
+
+	/**
+	 * Performs a {@code drop} operation.
+	 * 
+	 * @param conn
+	 * @throws StarbucksLocatorException
+	 */
+	private static void dropLocationsTable(Connection conn) throws StarbucksLocatorException {
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(STMT_DROP_TABLE);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new StarbucksLocatorException("SQL exception thrown, could not drop table "
+					+ DBConstants.TABLE_NAME + ".");
+		}
 	}
 }

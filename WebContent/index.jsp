@@ -43,9 +43,9 @@
 			<div class="grid_12">
 				<form class="addr-form" action="Controller" method="post">
 					<%
-						String nameCommand = StarbucksLocatorConstants.REQ_PARAM_NAME_COMMAND;
-						String nameAddress = StarbucksLocatorConstants.REQ_PARAM_NAME_ADDRESS;
-						String valueLocate = StarbucksLocatorConstants.REQ_PARAM_VALUE_LOCATE;
+						String nameCommand = AppConstants.REQ_PARAM_NAME_COMMAND;
+						String nameAddress = AppConstants.REQ_PARAM_NAME_ADDRESS;
+						String valueLocate = AppConstants.REQ_PARAM_VALUE_LOCATE;
 					%>
 					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" />
 					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Type in your address" />
