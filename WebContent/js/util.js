@@ -9,7 +9,10 @@ var Starbucks = {
 	},
 	
 	variables : {
-		placeLocation : false
+		map : false,
+		placeLocation : false,
+		autocomplete : false,
+		isMapZoomSet : false
 	},
 	
 	init : {
@@ -22,9 +25,9 @@ var Starbucks = {
 				bounds : defaultBounds,
 				types : ['establishment']
 			};
-			autocomplete = new google.maps.places.Autocomplete(input, options);
+			Starbucks.variables.autocomplete = new google.maps.places.Autocomplete(input, options);
 			
-			google.maps.event.addListener(autocomplete, 'place_changed', Starbucks.handlers.placeChangeListener);
+			google.maps.event.addListener(Starbucks.variables.autocomplete, 'place_changed', Starbucks.handlers.placeChangeListener);
 
 		},
 		
@@ -34,7 +37,7 @@ var Starbucks = {
 				zoom : 8,
 				mapTypeId : google.maps.MapTypeId.TERRAIN
 			};
-			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			Starbucks.variables.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 		},
 		
 		attachListeners : function() {
@@ -59,7 +62,7 @@ var Starbucks = {
 		
 		placeChangeListener : function() {
 			
-			var geo = autocomplete.getPlace().geometry;
+			var geo = Starbucks.variables.autocomplete.getPlace().geometry;
 			geo && (Starbucks.variables.placeLocation = geo.location);
 		}
 	},
@@ -80,6 +83,7 @@ var Starbucks = {
 		
 		requestLocations : function(lat, lng) {
 			
+			// prepare request
 			var url = 'AsyncService?';
 			url += Starbucks.constants.REQ_PARAM_NAME_COMMAND;
 			url += '=';
@@ -93,24 +97,27 @@ var Starbucks = {
 			url += '=';
 			url += lng;
 
-			var sidebar = document.getElementById('sidebar');
-			Starbucks.ajax.loadContent(url, sidebar);
+			// load data as json and delegate to callback
+			Starbucks.ajax.loadData(url);
+			
 		}
 	},
 	
 	ajax : {
 		
-		loadContent : function(url, targetEl) {
+		loadData : function(url) {
 
 			var xhr = Starbucks.ajax.getXHRObject();
 
 			Starbucks.ajax.executeXHRCall(url, xhr, function() {
-				var data = xhr.responseText;
+				var data = xhr.response;
 				var jsonData = JSON.parse(data);
-				var htmlData = Starbucks.parse.jsonToHtmlList(jsonData);
-				// targetEl.innerHTML = htmlData;
-				targetEl.innerHTML = '';
-				targetEl.appendChild(htmlData);
+
+				// init locations list
+				Starbucks.mod.updateList(jsonData);
+
+				// center map and pin flags
+				Starbucks.mod.updateMap(jsonData['data']);
 			});
 		},
 		
@@ -123,6 +130,7 @@ var Starbucks = {
 					onSuccessCallback();
 				}
 			};
+			xhr.overrideMimeType('application/json');
 			xhr.open('GET', url, true);
 			xhr.send(null);
 		},
@@ -131,11 +139,7 @@ var Starbucks = {
 
 			var xhr;
 			if (window.XMLHttpRequest) {
-				xhr = new XMLHttpRequest();
-				if (xhr.overrideMimeType) {
-					xhr.overrideMimeType('text/xml');
-				}
-				return xhr;
+				return new XMLHttpRequest();
 			} else if (window.ActiveXObject) {
 				try {
 					return new ActiveXObject('Msxml2.xhr');
@@ -160,8 +164,9 @@ var Starbucks = {
 			
 			var ulEl = document.createElement('UL');
 			ulEl.setAttribute('class', 'locations-list');
-			for (var n in data) {
-				var loc = data[n];
+			dataArr = data['data'];
+			for (var n in dataArr) {
+				var loc = dataArr[n];
 				var city = loc['City'];
 				var address = loc['Address'];
 				
@@ -171,8 +176,8 @@ var Starbucks = {
 				liElTitle.setAttribute('class', 'll-title');
 				liElContent.setAttribute('class', 'll-content');
 				
-				liElTitle.innerText = city;
-				liElContent.innerText = address;
+				liElTitle.textContent = city;
+				liElContent.textContent = address;
 				
 				ulEl.appendChild(liElTitle);
 				ulEl.appendChild(liElContent);
@@ -181,6 +186,45 @@ var Starbucks = {
 			return ulEl;
 		}
 
+	},
+	
+	mod : {
+		
+		updateMap : function(locations) {
+			
+			// zoom in
+			Starbucks.variables.isMapZoomSet || (function() {
+				Starbucks.variables.map.setZoom(12);
+				Starbucks.variables.isMapZoomSet = true;
+			})();
+			
+			// bring into view
+			var loc = Starbucks.variables.placeLocation;
+			var locLatLng = new google.maps.LatLng(loc.lat(), loc.lng());
+			Starbucks.variables.map.setCenter(locLatLng);
+			
+			// pin flags
+			new google.maps.Marker({
+				map : Starbucks.variables.map,
+				position : locLatLng
+			});
+			for (var l in locations) {
+				var lo = locations[l];
+				var latLng = new google.maps.LatLng(lo.Lat, lo.Lng);
+				new google.maps.Marker({
+					map : Starbucks.variables.map,
+					position : latLng
+				});
+			}
+			// TODO use vector icons / symbols / polylines
+		}, 
+		
+		updateList : function(jsonData) {
+			var targetEl = document.getElementById('sidebar');
+			var htmlData = Starbucks.parse.jsonToHtmlList(jsonData);
+			targetEl.removeChild(targetEl.childNodes[0]);
+			targetEl.appendChild(htmlData);
+		}
 	}
 	
 };

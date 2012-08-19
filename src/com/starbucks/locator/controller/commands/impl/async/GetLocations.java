@@ -22,6 +22,8 @@ public class GetLocations implements AsyncCommand {
 	public Transferable handle(HttpServletRequest req, HttpServletResponse res) throws ServletException,
 			IOException {
 		
+		res.setContentType("application/json");
+		
 		String lat = req.getParameter(AppConstants.REQ_PARAM_NAME_LAT);
 		String lng = req.getParameter(AppConstants.REQ_PARAM_NAME_LNG);
 		
@@ -55,7 +57,7 @@ public class GetLocations implements AsyncCommand {
 			
 			@Override
 			public String asString() {
-				return jsonResponse;
+				return "{\"data\":" + jsonResponse + "}";
 			}
 		};
 	}
