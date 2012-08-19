@@ -1,9 +1,61 @@
 # Where's My Coffee?
 
-A Starbucks store locator web application.
+#### A Starbucks Store Locator Web Application
 
-## Bootstrap
+Use it to locate nearby stores. Applies within a 5km radius, and only supports addresses inside the USA.
 
-### Set system environment variables:
 
-- `STARBUCKS_LOCATOR_HOME=[project path]`
+## Project Structure
+
+Aside from the **WebContent** and **src** folders, this project contains these:
+- **db** - Contains the embedded JavaDB database (using Derby's embedded driver).
+- **lib** - Used to store the `derby.jar`.
+- **resources** - additional required assets, e.g. initial data to populate the database on startup.
+
+
+## Dependencies
+
+This project relies on the following:
+- **[Java Development Kit 6][jdk-6]**
+- **[Apache Tomcat 7.0.8][tomcat-7-0-8]**
+
+
+## Run Configuration
+
+Currently only runs from within [Eclipse][eclipse].
+- Create a system environment variable named `STARBUCKS_LOCATOR_HOME` and set its value to the project path.
+- Fork and clone the project to your workspace.
+- Set the apache instance as its targeted runtime. See the [how-to entry on the Eclipse docs][inst-tom] for a quick reference.
+
+
+## Build
+
+Use the default Java builder and compiler.
+Automated build for distribution is not being used at the moment.
+
+
+## Roadmap
+
+
+## Issue Tracking
+
+To submit bugs, feature requests, patches, or to open new issues, please refer to this github account's issues list.
+
+
+## Author
+
+Eliran Malka
+
+#### Contact Details
+
+- **E-Mail** - eliranmal[at]gmail[dot]com
+- **LinkedIn** - http://www.linkedin.com/in/eliranmalka
+
+
+
+
+[eclipse]: http://www.eclipse.org/downloads/
+[tomcat-7-0-8]: http://olex.openlogic.com/packages/tomcat/7.0.8
+[jdk-6]: http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
+[inst-tom]: http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.jst.server.ui.doc.user%2Ftopics%2Ftomcat.html
+
