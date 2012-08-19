@@ -32,14 +32,14 @@ This project relies on the following:
 ## Run Configuration
 
 Currently only runs from within [Eclipse][eclipse].
-- Create a system environment variable named `STARBUCKS_LOCATOR_HOME` and set its value to the project path.
-- Fork and clone the project to your workspace.
+- Create a system environment variable named `STARBUCKS_LOCATOR_HOME` and set its value to the intended project's path.
+- `fork` this repo and `clone` / import as a project in your workspace.
 - Set the apache instance as its targeted runtime. See the [how-to entry on the Eclipse docs][inst-tom] for a quick reference.
 
 
 ## Build
 
-Use the default Java builder and compiler.
+Use the JDK6 builder and compiler.
 Automated build for distribution is not being used at the moment.
 
 
