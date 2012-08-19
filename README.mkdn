@@ -45,7 +45,10 @@ Automated build for distribution is not being used at the moment.
 
 ## Roadmap
 
-...
+- Bind list and map operations
+- Implement JS faux scrollbars
+- Integrate build system
+- Integrate testing framework (Selenium?)
 
 
 ## Issue Tracking
