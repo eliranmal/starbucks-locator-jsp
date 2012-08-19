@@ -26,6 +26,8 @@ public class ViewManager extends HttpServlet {
 		Transferable resText = (Transferable) ajaxRes;
 
 		// TODO format resText if necessary
+
+		
 		
 		PrintWriter out;
 		out = res.getWriter();

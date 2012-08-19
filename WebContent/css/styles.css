@@ -198,6 +198,7 @@ a:hover, a:active, a:focus {
  */
 
 #footer {
+	border-top: 1px solid #007042;
 	font-size: .7em;
 	color: #777;
 }
@@ -209,7 +210,18 @@ a:hover, a:active, a:focus {
 
 
 /*
- * 9. Custom Containers
+ * 7. Sidebar
+ */
+
+#sidebar {
+	position: relative;
+	min-height: 376px;
+	background-color: #f6f6f6;
+}
+
+
+/*
+ * 8. Custom Containers
  */
 
 #wrapper {
@@ -237,7 +249,7 @@ a#logo {
 }
 #map-container {
 	width: 612px;
-	height: 306px;
+	height: 366px;
 }
 #map-canvas {
 	width: 100%;
@@ -249,9 +261,24 @@ a#logo {
 	font-family: Futura,'Century Gothic',AppleGothic,sans-serif !important;
 }
 
+.locations-list {
+	padding: 10px;
+	font-size: 16px;
+}
+.ll-title {
+	font-weight: bold;
+	color: #007042;
+}
+.ll-content {
+	padding-bottom: .7em;
+	font-size: .7em;
+	line-height: 1.2;
+	color: #777;
+}
+
 
 /*
- * 10. Widgets
+ * 9. Widgets
  */
 
 /* autocomplete form */
@@ -287,7 +314,10 @@ a#logo {
 	height: 30px;
 	background: transparent url('../images/search.png') 0 0 no-repeat;
 	border: 0 none;
-	cursor: pointer;
+}
+a.addr-submit,
+a.addr-submit:hover {
+	border-bottom: 0 none;
 }
 .addr-submit:hover {
 	background-position: 0 -30px;

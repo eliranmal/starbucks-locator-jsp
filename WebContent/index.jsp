@@ -17,10 +17,7 @@
 		<link href="css/960_12_col.css" type="text/css" rel="stylesheet" media="screen" />
 		<link href="css/styles.css" type="text/css" rel="stylesheet" media="screen" />
 
-		<script src="js/util.js"></script>
-		<script src="js/loader.js"></script>
-
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 	</head>
 	<body>
 		<div id="wrapper" class="container_12">
@@ -41,29 +38,14 @@
 			</header>
 			<div class="clear"></div>
 			<div class="grid_12">
-<!-- 				<form class="addr-form" action="AsyncService" method="post"> -->
 				<div class="addr-form">
-					<%
-						String nameCommand = AppConstants.REQ_PARAM_NAME_COMMAND;
-						String nameAddress = AppConstants.REQ_PARAM_NAME_ADDRESS;
-						String valueLocate = AppConstants.REQ_PARAM_VALUE_LOCATE;
-					%>
-<!-- 					<input type="hidden" name="<%= nameCommand %>" id="<%= nameCommand %>" value="<%= valueLocate %>" /> -->
-					<input class="addr-input round-17" id="<%= nameAddress %>" name="<%= nameAddress %>" type="autocomplete" placeholder="Where you're at? Fill your address please." />
-					<a class="addr-submit round-14" href="AsyncService?<%= nameCommand %>=<%= valueLocate %>"></a>
+					<input id="addr-input" class="addr-input round-17" type="autocomplete" placeholder="Where you're at? Fill your address please." />
+					<a id="addr-submit" class="addr-submit round-14" href="#"></a>
 				</div>
-<!-- 					<input class="addr-submit round-14" type="submit" value="" /> -->
-<!-- 				</form> -->
 			</div>
 			<div class="clear pad-b"></div>
-			<aside id="sidebar" class="grid_4">
-				<ul>
-					<li>
-						City: city.<br />
-						Address: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-					</li>
-				</ul>
-			</aside>
+			<div id="sidebar" class="grid_4">
+			</div>
 			<div id="content" class="grid_8">
 				<div id="map-container" class="frame">
 					<div id="map-canvas"></div>
@@ -71,8 +53,29 @@
 			</div>
 			<div class="clear"></div>
 			<footer id="footer" class="grid_12 right-text">
-				Footer
+				Powered by me
 			</footer>
 		</div>
+
+		
+		<%
+			String nameCommand = AppConstants.REQ_PARAM_NAME_COMMAND;
+			String nameLat = AppConstants.REQ_PARAM_NAME_LAT;
+			String nameLng = AppConstants.REQ_PARAM_NAME_LNG;
+			String valueLocate = AppConstants.REQ_PARAM_VALUE_LOCATE;
+		%>
+		<script src="js/util.js"></script>
+		<script src="js/loader.js"></script>
+		<script>
+			var nameCommand = '<%= nameCommand %>';
+			var nameLat = '<%= nameLat %>';
+			var nameLng = '<%= nameLng %>';
+			var valueLocate = '<%= valueLocate %>';
+			Starbucks.constants.REQ_PARAM_NAME_COMMAND = nameCommand;
+			Starbucks.constants.REQ_PARAM_NAME_LAT = nameLat;
+			Starbucks.constants.REQ_PARAM_NAME_LNG = nameLng;
+			Starbucks.constants.REQ_PARAM_VALUE_LOCATE = valueLocate;
+		</script>
+		
 	</body>
 </html>

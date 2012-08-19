@@ -2,74 +2,77 @@ package com.starbucks.locator.model.dto;
 
 public class Location implements Comparable<Location> {
 
-	private double _lng;
-	private double _lat;
-	private String _city;
-	private String _address;
+	/*
+	 * initial caps naming for the sake of pojo-document(-json) parsing, see Helper class under json utils.
+	 */
+	private double Lng;
+	private double Lat;
+	private String City;
+	private String Address;
 
 	
 	/**
 	 * default initialization
 	 */
 	public Location() {
-		_lng = 0.0;
-		_lat = 0.0;
-		_city = "";
-		_address = "";
+		this.Lng = 0.0;
+		this.Lat = 0.0;
+		this.City = "";
+		this.Address = "";
 	}
 
-
 	public Location(double lng, double lat, String city, String address) {
-		_lng = lng;
-		_lat = lat;
-		_city = city;
-		_address = address;
+		this.Lng = lng;
+		this.Lat = lat;
+		this.City = city;
+		this.Address = address;
 	}
 
 	
 	public double getLng() {
-		return _lng;
+		return Lng;
 	}
 
 	public void setLng(double lng) {
-		_lng = lng;
+		this.Lng = lng;
 	}
 
 	public double getLat() {
-		return _lat;
+		return Lat;
 	}
 
 	public void setLat(double lat) {
-		_lat = lat;
+		this.Lat = lat;
 	}
 
 	public String getCity() {
-		return _city;
+		return City;
 	}
 
 	public void setCity(String city) {
-		_city = city;
+		this.City = city;
 	}
 
 	public String getAddress() {
-		return _address;
+		return Address;
 	}
 
 	public void setAddress(String address) {
-		_address = address;
+		this.Address = address;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [_lng=" + _lng + ", _lat=" + _lat + ", _city=" + _city + ", _address="
-				+ _address + "]";
+		return "Location [lng=" + Lng + ", lat=" + Lat + ", city=" + City + ", address=" + Address
+				+ "]";
 	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((_address == null) ? 0 : _address.hashCode());
+		result = prime * result + ((Address == null) ? 0 : Address.hashCode());
 		return result;
 	}
 
@@ -82,10 +85,10 @@ public class Location implements Comparable<Location> {
 		if (getClass() != obj.getClass())
 			return false;
 		Location other = (Location) obj;
-		if (_address == null) {
-			if (other._address != null)
+		if (Address == null) {
+			if (other.Address != null)
 				return false;
-		} else if (!_address.equals(other._address))
+		} else if (!Address.equals(other.Address))
 			return false;
 		return true;
 	}

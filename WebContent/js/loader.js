@@ -1,10 +1,14 @@
 (function(w, d) {
 
 	w.onload = function() {
+		
+		// google maps API
 		Starbucks.init.placesAutocomplete();
 		Starbucks.init.googleMap();
+		
+		// event listeners
+		Starbucks.init.attachListeners();
+		
 	};
-
-	// TODO add enter key hander for the input button
 
 })(window, document);

@@ -22,10 +22,6 @@
 		<servlet-name>ViewManager</servlet-name>
 		<servlet-class>com.starbucks.locator.view.ViewManager</servlet-class>
 	</servlet>
-	<servlet>
-		<servlet-name>LocatorService</servlet-name>
-		<servlet-class>com.starbucks.locator.controller.LocatorService</servlet-class>
-	</servlet>
 	<servlet-mapping>
 		<servlet-name>GenericAsyncService</servlet-name>
 		<url-pattern>/AsyncService</url-pattern>
@@ -33,10 +29,6 @@
 	<servlet-mapping>
 		<servlet-name>ViewManager</servlet-name>
 		<url-pattern>/ViewManager</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>LocatorService</servlet-name>
-		<url-pattern>/LocatorService</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
