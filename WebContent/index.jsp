@@ -53,7 +53,7 @@
 			</div>
 			<div class="clear"></div>
 			<footer id="footer" class="grid_12 right-text">
-				Powered by me
+				powered by me
 			</footer>
 		</div>
 

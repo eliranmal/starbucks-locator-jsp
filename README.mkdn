@@ -13,6 +13,15 @@ Aside from the **WebContent** and **src** folders, this project contains these:
 - **resources** - additional required assets, e.g. initial data to populate the database on startup.
 
 
+## Requirements
+
+Tested succesfully on a Win32 XP OS, on the following browsers:
+- Chrome 21.0 beta-m
+- Safari 5.0.4
+- Opera 12.0
+- Firefox 13.0
+
+
 ## Dependencies
 
 This project relies on the following:
@@ -35,6 +44,8 @@ Automated build for distribution is not being used at the moment.
 
 
 ## Roadmap
+
+...
 
 
 ## Issue Tracking

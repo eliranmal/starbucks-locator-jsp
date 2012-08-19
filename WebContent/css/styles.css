@@ -215,7 +215,8 @@ a:hover, a:active, a:focus {
 
 #sidebar {
 	position: relative;
-	min-height: 376px;
+	height: 376px;
+	overflow-y: auto;
 	background-color: #f6f6f6;
 }
 
